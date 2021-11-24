@@ -14,7 +14,42 @@ This workflow calculates *in vivo* bacterial replication rates from single time 
 
 The human gut is inhabited by a diverse community of microorganisms, collectively known as the microbiota, which is deeply connected to human health [[1]](#1). In disease, the gut ecosystem experiences drastic perturbations to its physical environment, which can impact both the host and the microbial communities that inhabit it [[2]](#2)[[3]](#3)[[4]](#4). Specifically, physical perturbations can impede bacterial growth by disrupting the specific environmental conditions required by bacteria to survive [[2]](#2). A common perturbation to the gut environment is due to malabsorption, which leads to an increase in gut osmolality, or the number of non-absorbed particles in intestinal contents. Malabsorption is caused by laxative use, food intolerances or inflammatory bowel disease [[2]](#2)[[5]](#5). Gut osmolality increases induce osmotic diarrhea by causing water to exit cells to balance the disrupted osmotic potential [[6]](#6). This also affects the gut microbial communities in a species dependent manner [[2]](#2)[[7]](#7). 
 
-Understanding the impact of the osmolality on the gut microbiota is a necessary step towards developing microbiota-aware precision medicine. This can be achieved by leveraging *in vitro* and *in vivo* models to evaluate gut microbial responses to increased osmotic stress, which will help identify strains that can tolerate and ameliorate malabsorption. Specifically, bacterial abundance and growth rate can be measured as indicators of bacterial responses to osmotic stress. *In vitro* bacteria abundance and growth rate under different osmolalities can be rapidly and easily calculate via simple plate reader experiments. However, assessing these measures *in vivo* is more challenging, as it requires metagenomics sequencing and computational expertise. Here, we introduce a snakemake workflow to calculate bacterial replication rates using the tool [iRep](https://github.com/christophertbrown/iRep) [[8]](#8) from single time point metagenomics sequencing
+While we understand the importance of osmotic perturbations, we are still unable to predict gut microbial dynamics in response to malabsorption, which is required for effective microbiota therapy. Achieving predictability would allow the development of microbial therapies against malabsorption (e.g., fecal microbiota transplant or administration of probiotic strains) with clear and expected colonization outcomes. I hypothesize that osmolality is a major driver of bacterial abundance in the gut, in limiting cases superseding host-microbiota and inter-microbial interactions. Physical perturbations can impede bacterial growth by disrupting the specific environmental conditions required by bacteria to survive. In the absence of growth, bacteria cannot interact biochemically with the host or other microbes, emphasising the major role of the physical environment in shaping bacterial dynamics. As a result, microbial responses to osmotic stress in vitro should be predictive of those in vivo, possibly revealing interesting interactions between the host and the microbiota under gut environmental aberrations. 
+
+Understanding the impact of the osmolality on the gut microbiota is a necessary step towards developing microbiota-aware precision medicine. This can be achieved by leveraging *in vitro* and *in vivo* models to evaluate gut microbial responses to increased osmotic stress, which will help identify strains that can tolerate and ameliorate malabsorption. Specifically, bacterial abundance and growth rate can be measured as indicators of bacterial responses to osmotic stress. *In vitro* bacteria abundance and growth rate under different osmolalities can be rapidly and easily calculate via simple plate reader experiments. However, assessing these measures *in vivo* is more challenging, as it requires metagenomics sequencing and computational expertise. Here, we introduce a snakemake workflow to calculate bacterial replication rates using the tool [iRep](https://github.com/christophertbrown/iRep) [[8]](#8) from single time point. metagenomics sequencing.
+
+***
+
+
+# Workflow Overview
+
+This workflow was built using `Snakemake`, a useful tool to create reproducible and scalable data analyses. The workflow is designed to run on a defined set of downloadable FASTQ files and it calculates replication rates for two common gut commensals: *Bacteroides thetaiotaomicron* VPI-5482 and *Muribaculum intestinale* G6. The reference genome for *B. thetaiotaomicron* is downloaded from NCBI, but the genome for *M. intestinale* is provided as it is not currently publicly available. 
+
+<br />
+
+The key steps of the workflow are listed here:
+
+1. Download FASTQ reads
+
+2. Download reference genomes
+
+3. Perform FASTQ quality control (trimmomatic and BBmap)
+
+4. Index reference genomes (bowtie2)
+
+5. Map reads to indeces (bowtie2)
+
+6. Calculate replication rates (iRep)
+
+<br />
+
+Here is a visualization of the workflow:
+
+![](./man/figures/dag.png) 
+
+<br />
+
+
 
 
 ## References
