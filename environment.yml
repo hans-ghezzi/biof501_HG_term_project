@@ -1,4 +1,4 @@
-name: HG_biof_project
+name: term_project
 channels:
   - biobakery
   - conda-forge
