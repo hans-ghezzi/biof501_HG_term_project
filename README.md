@@ -49,8 +49,22 @@ Here is a visualization of the workflow:
 
 <br />
 
+## Dependencies
 
+Installing and running this workflow requires [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) to be installed by the user.
 
+This snakemake workflow relies on the following main package dependencies:
+```bash
+python v3.8.12
+snakemake v6.10.0
+trimmomatic v0.39
+bowtie2 v2.4.4
+bbmap v38.39
+samtools v1.14
+iRep v1.1.7
+genomepy v0.11.0
+graphviz v2.40.1
+```
 
 ## References
 <a id="1">[1]</a>
