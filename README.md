@@ -74,8 +74,44 @@ To access the workflow, clone this repository to your computer by running:
 git clone https://github.com/hans-ghezzi/biof501_HG_term_project.git
 ```
 
+Navigate to the project directory:
+
+```sh
+cd biof501_HG_term_project
+```
+
+Make sure you do not have any `conda` environments already activated:
+
+```sh
+conda deactivate
+```
+
+Create a `conda` environment, called "term_project", using the file `environment.yml`. This will install all the package dependencies required to run the workflow.
+
+```sh
+conda env create -f environment.yml
+```
+
+Activate the `term_project` environment:
+```sh
+conda activate term_project
+```
 
 ## Usage
+
+
+You are now ready to run the workflow! When running the workflow, choose the number of cores snakemake can use to run the workflow based on the computational power available. Indicating more than one core allows snakemake to run parts of the workflow in parallel:
+
+```sh
+snakemake --cores 1
+```
+
+## Expected output
+
+You can check that the workflow ran to completion by comparing the outputs to the expected outputs shown here:
+
+
+
 
 
 
