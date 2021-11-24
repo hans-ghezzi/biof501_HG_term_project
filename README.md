@@ -66,6 +66,20 @@ genomepy v0.11.0
 graphviz v2.40.1
 ```
 
+## Installation
+
+To access the workflow, clone this repository to your computer by running:
+
+```sh
+git clone https://github.com/hans-ghezzi/biof501_HG_term_project.git
+```
+
+
+## Usage
+
+
+
+
 ## References
 <a id="1">[1]</a>
 Kho ZY, Lal SK. 2018. The Human Gut Microbiome – A Potential Controller of Wellness and Disease. Front Microbiol.
