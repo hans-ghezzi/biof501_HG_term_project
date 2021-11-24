@@ -17,7 +17,7 @@ rule download_reads:
 		r1_R2="data/samples/1_1_4_S1_R2_001.fastq.gz"
 	shell:
 		"""
-		wget https://www.dropbox.com/s/kjatx9b4jsj1w2y/1_1_4_S1_R1_001.fastq.gz?dl=1 -O {output.r1_R1},
+		wget https://www.dropbox.com/s/kjatx9b4jsj1w2y/1_1_4_S1_R1_001.fastq.gz?dl=1 -O {output.r1_R1}
 		wget https://www.dropbox.com/s/211o0y426yzhekd/1_1_4_S1_R2_001.fastq.gz?dl=1 -O {output.r1_R2}
 		"""
 		
