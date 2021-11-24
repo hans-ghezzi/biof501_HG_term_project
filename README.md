@@ -100,7 +100,7 @@ conda activate term_project
 ## Usage
 
 
-You are now ready to run the workflow! When running the workflow, choose the number of cores snakemake can use to run the workflow based on the computational power available. Indicating more than one core allows snakemake to run parts of the workflow in parallel:
+You are now ready to run the workflow! Choose the number of cores snakemake can use to run the workflow based on the computational power available. Indicating more than one core allows snakemake to run parts of the workflow in parallel:
 
 ```sh
 snakemake --cores 1
