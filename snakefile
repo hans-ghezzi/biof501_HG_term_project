@@ -23,7 +23,7 @@ rule download_reads:
 		
 rule download_host:
 	output:
-		multiext("mm39/mm39", ".fa", ".fa.fai", ".fa.sizes", ".gaps.bed", ".annotation.gtf.gz", ".blacklist.bed")
+		multiext("mm39/mm39", ".fa", ".fa.fai", ".fa.sizes", ".gaps.bed")
 	params:
 		source="UCSC",
 		masking="hard",
@@ -52,7 +52,7 @@ rule trimmomatic:
 		
 rule host_decontam:
 	input:
-		ref="data/mm39/mm39.fa",
+		ref="mm39/mm39.fa",
 		r1="analyses/trimmed/1_1_4_S1_R1_001.trimmed.fastq.gz",
 		r2="analyses/trimmed/1_1_4_S1_R2_001.trimmed.fastq.gz"
 	output:
