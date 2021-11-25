@@ -1,6 +1,6 @@
 rule all:
 	input:
-		["Analyses/iRep/Bt_1_1_4_S1_iRep.pdf", "Analyses/iRep/G6_1_1_4_S1_iRep.pdf", "B_theta.1.bt2", "M_intestinale.1.bt2" ]
+		["Analyses/iRep/Bt_1_1_4_S1_iRep.pdf", "Analyses/iRep/G6_1_1_4_S1_iRep.pdf", "BTheta.1.bt2", "MIntestinale.1.bt2" ]
 
 rule download_ref:
 	output:
@@ -60,7 +60,7 @@ rule host_decontam:
 		outu2="analyses/trimmed/1_1_4_S1_R2_001.decon.fastq.gz"
 	shell:
 		"""
-		bbmap.sh ref={input.ref} in1={input.r1} in2={input.r2} outu1={output.outu1} outu2={output.outu2} -Xmg10g
+		bbmap.sh ref={input.ref} in1={input.r1} in2={input.r2} outu1={output.outu1} outu2={output.outu2} -Xmx10g
 		"""
 		
 rule Bt_indexing:
