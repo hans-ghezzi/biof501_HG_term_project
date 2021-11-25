@@ -26,10 +26,12 @@ rule download_host:
 		multiext("mm39/mm39", ".fa", ".fa.fai", ".fa.sizes", ".gaps.bed", ".annotation.gtf.gz", ".blacklist.bed")
 	params:
 		source="UCSC",
-		masking="hard"
+		masking="hard",
+		dir="./"
 	shell:
 		"""
-		genomepy install mm39 -p {params.source} -m {params.masking}
+		genomepy plugin disable blacklist bowtie2 bwa gmap hisat2 minimap2 star
+		genomepy install mm39 -p {params.source} -m {params.masking} -g {params.dir}
 		"""
 		
 rule trimmomatic:
@@ -50,7 +52,7 @@ rule trimmomatic:
 		
 rule host_decontam:
 	input:
-		ref="mm39/mm39.fa",
+		ref="data/mm39/mm39.fa",
 		r1="analyses/trimmed/1_1_4_S1_R1_001.trimmed.fastq.gz",
 		r2="analyses/trimmed/1_1_4_S1_R2_001.trimmed.fastq.gz"
 	output:
