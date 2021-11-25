@@ -26,11 +26,10 @@ rule download_host:
 		multiext("mm39/mm39", ".fa", ".fa.fai", ".fa.sizes", ".gaps.bed", ".annotation.gtf.gz", ".blacklist.bed")
 	params:
 		source="UCSC",
-		dir="data/genomes",
 		masking="hard"
 	shell:
 		"""
-		genomepy install mm39 -p {params.source} -g {params.dir} -m {params.masking}
+		genomepy install mm39 -p {params.source} -m {params.masking}
 		"""
 		
 rule trimmomatic:
