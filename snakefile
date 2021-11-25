@@ -64,24 +64,37 @@ rule host_decontam:
 		"""
 		
 rule Bt_indexing:
-	input:
-		Bt="data/genomes/Bacteroides_thetaiotaomicron_VPI_5482_genomic.fna"
-	output:
-		multiext("B_theta",".1.bt2", ".2.bt2", ".3.bt2", ".4.bt2", ".rev.1.bt2", ".rev.2.bt2")
-	shell:
-		"""
-		bowtie2-build {input.Bt} {output}
-		"""
-	
+    input:
+        reference="data/genomes/Bacteroides_thetaiotaomicron_VPI_5482_genomic.fna"
+    output:
+        multiext(
+            "BTheta",
+            ".1.bt2", ".2.bt2", ".3.bt2", ".4.bt2", ".rev.1.bt2", ".rev.2.bt2",
+        ),
+    log:
+        "logs/bowtie2_build/build_Bt.log"
+    params:
+        extra=""  # optional parameters
+    threads: 8
+    wrapper:
+        "v0.80.1/bio/bowtie2/build"
+
 rule G6_indexing:
-	input:
-		G6="data/genomes/Muribaculum_intestinale_G6_genomic.fna"
-	output:
-		multiext("M_intestinale",".1.bt2", ".2.bt2", ".3.bt2", ".4.bt2", ".rev.1.bt2", ".rev.2.bt2")
-	shell:
-		"""
-		bowtie2-build {input.G6} {output}
-		"""
+    input:
+        reference="data/genomes/Muribaculum_intestinale_G6_genomic.fna"
+    output:
+        multiext(
+            "MIntestinale",
+            ".1.bt2", ".2.bt2", ".3.bt2", ".4.bt2", ".rev.1.bt2", ".rev.2.bt2",
+        ),
+    log:
+        "logs/bowtie2_build/build_G6.log"
+    params:
+        extra=""  # optional parameters
+    threads: 8
+    wrapper:
+        "v0.80.1/bio/bowtie2/build"
+		
 rule Bt_mapping:
 	input:
 		r1="analyses/trimmed/1_1_4_S1_R1_001.decon.fastq.gz",
