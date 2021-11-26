@@ -114,7 +114,7 @@ rule G6_mapping:
 		idx="MIntestinale"
 	shell:
 		"""
-		bowtie2 -D 20 -R 3 -N 0 -L 20 -i S,1,0.50 --reorder -x MIntestinale -1 {input.r1} -2 {input.r2} --no-unal -p 15 -S {output.sam}
+		bowtie2 -D 20 -R 3 -N 0 -L 20 -i S,1,0.50 --reorder -x {params.idx} -1 {input.r1} -2 {input.r2} --no-unal -p 15 -S {output.sam}
 		"""
 		
 rule iRep_Bt:
@@ -125,7 +125,7 @@ rule iRep_Bt:
 		multiext("analyses/iRep/Bt_1_1_4_S1_iRep",".tsv", ".pdf")
 	shell:
 		"""
-		iRep -ff -f {input.ref} -s {input.sam} -o 1_1_4_S1_iRep
+		iRep -ff -f {input.ref} -s {input.sam} -o analyses/iRep/Bt_1_1_4_S1_iRep
 		"""
 		
 rule iRep_G6:
@@ -136,5 +136,5 @@ rule iRep_G6:
 		multiext("analyses/iRep/G6_1_1_4_S1_iRep",".tsv", ".pdf")
 	shell:
 		"""
-		iRep -ff -f {input.ref} -s {input.sam} -o 1_1_4_S1_iRep
+		iRep -ff -f {input.ref} -s {input.sam} -o analyses/iRep/G6_1_1_4_S1_iRep
 		"""
