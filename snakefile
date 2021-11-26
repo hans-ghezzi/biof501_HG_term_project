@@ -1,6 +1,6 @@
 rule all:
 	input:
-		["Analyses/iRep/Bt_1_1_4_S1_iRep.tsv", "Analyses/iRep/G6_1_1_4_S1_iRep.tsv", "BTheta.1.bt2", "MIntestinale.1.bt2" ]
+		["analyses/iRep/Bt_1_1_4_S1_iRep.tsv", "analyses/iRep/G6_1_1_4_S1_iRep.tsv"]
 
 rule download_ref:
 	output:
@@ -68,7 +68,7 @@ rule Bt_indexing:
         reference="data/genomes/Bacteroides_thetaiotaomicron_VPI_5482_genomic.fna"
     output:
         multiext(
-            "Bt_index/BTheta",
+            "BTheta",
             ".1.bt2", ".2.bt2", ".3.bt2", ".4.bt2", ".rev.1.bt2", ".rev.2.bt2",
         ),
     log:
@@ -84,7 +84,7 @@ rule G6_indexing:
         reference="data/genomes/Muribaculum_intestinale_G6_genomic.fna"
     output:
         multiext(
-            "G6_index/MIntestinale",
+            "MIntestinale",
             ".1.bt2", ".2.bt2", ".3.bt2", ".4.bt2", ".rev.1.bt2", ".rev.2.bt2",
         ),
     log:
@@ -98,25 +98,23 @@ rule G6_indexing:
 rule Bt_mapping:
 	input:
 		r1="analyses/decontaminated/1_1_4_S1_R1_001.decon.fastq.gz",
-		r2="analyses/decontaminated/1_1_4_S1_R2_001.decon.fastq.gz",
-		index=directory("Bt_index/")
+		r2="analyses/decontaminated/1_1_4_S1_R2_001.decon.fastq.gz"
 	output:
 		sam="analyses/alignments/B_theta/Bt_1_1_4_S1_alignment.sam"
 	shell:
 		"""
-		bowtie2 -D 20 -R 3 -N 0 -L 20 -i S,1,0.50 --reorder -x {input.index}/BTheta -1 {input.r1} -2 {input.r2} --no-unal -p 15 -S {output.sam}
+		bowtie2 -D 20 -R 3 -N 0 -L 20 -i S,1,0.50 --reorder -x BTheta -1 {input.r1} -2 {input.r2} --no-unal -p 15 -S {output.sam}
 		"""
 		
 rule G6_mapping:
 	input:
 		r1="analyses/decontaminated/1_1_4_S1_R1_001.decon.fastq.gz",
-		r2="analyses/decontaminated/1_1_4_S1_R2_001.decon.fastq.gz",
-		index=directory("G6_index/")
+		r2="analyses/decontaminated/1_1_4_S1_R2_001.decon.fastq.gz"
 	output:
 		sam="analyses/alignments/M_intestinale/G6_1_1_4_S1_alignment.sam"
 	shell:
 		"""
-		bowtie2 -D 20 -R 3 -N 0 -L 20 -i S,1,0.50 --reorder -x {input.index}/MIntestinale -1 {input.r1} -2 {input.r2} --no-unal -p 15 -S {output.sam}
+		bowtie2 -D 20 -R 3 -N 0 -L 20 -i S,1,0.50 --reorder -x MIntestinale -1 {input.r1} -2 {input.r2} --no-unal -p 15 -S {output.sam}
 		"""
 		
 rule iRep_Bt:
@@ -124,10 +122,10 @@ rule iRep_Bt:
 		ref="data/genomes/Bacteroides_thetaiotaomicron_VPI_5482_genomic.fna",
 		sam="analyses/alignments/B_theta/Bt_1_1_4_S1_alignment.sam"
 	output:
-		out="analyses/iRep/Bt_1_1_4_S1_iRep.tsv"
+		multiext("analyses/iRep/Bt_{sample}_iRep",".tsv", ".pdf")
 	shell:
 		"""
-		iRep -ff -f {input.ref} -s {input.sam} -o {output.out}
+		iRep -ff -f {input.ref} -s {input.sam} -o {wildcards.sample}_iRep
 		"""
 		
 rule iRep_G6:
@@ -135,8 +133,8 @@ rule iRep_G6:
 		ref="data/genomes/Muribaculum_intestinale_G6_genomic.fna",
 		sam="analyses/alignments/M_intestinale/G6_1_1_4_S1_alignment.sam"
 	output:
-		multiext("analyses/iRep/G6_1_1_4_S1_iRep",".tsv", ".pdf")
+		multiext("analyses/iRep/G6_{sample}_iRep",".tsv", ".pdf")
 	shell:
 		"""
-		iRep -ff -f {input.ref} -s {input.sam} -o {output}
+		iRep -ff -f {input.ref} -s {input.sam} -o {wildcards.sample}_iRep
 		"""
