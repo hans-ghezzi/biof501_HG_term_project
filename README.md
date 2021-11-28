@@ -12,18 +12,16 @@ This workflow calculates *in vivo* bacterial replication rates from single time 
 
 ## Overview
 
-The human gut is inhabited by a diverse community of microorganisms, collectively known as the microbiota, which is deeply connected to human health [[1]](#1). In disease, the gut ecosystem experiences drastic perturbations to its physical environment, which can impact both the host and the microbial communities that inhabit it [[2]](#2)[[3]](#3)[[4]](#4). Specifically, physical perturbations can impede bacterial growth by disrupting the specific environmental conditions required by bacteria to survive [[2]](#2). A common perturbation to the gut environment is due to malabsorption, which leads to an increase in gut osmolality, or the number of non-absorbed particles in intestinal contents. Malabsorption is caused by laxative use, food intolerances or inflammatory bowel disease [[2]](#2)[[5]](#5). Gut osmolality increases induce osmotic diarrhea by causing water to exit cells to balance the disrupted osmotic potential [[6]](#6). This also affects the gut microbial communities in a species dependent manner [[2]](#2)[[7]](#7). 
+The human gut is inhabited by a diverse community of microorganisms, collectively known as the microbiota, which is deeply connected to human health [[1]](#1). In disease, the gut ecosystem experiences drastic perturbations to its physical environment, which can impact both the host and the microbial communities that inhabit it [[2]](#2)[[3]](#3)[[4]](#4). Specifically, physical perturbations can impede bacterial growth by disrupting the specific environmental conditions required by bacteria to survive [[2]](#2). A common perturbation to the gut environment is due to malabsorption, which leads to an increase in gut osmolality, or the number of non-absorbed particles in intestinal contents. Malabsorption is caused by laxative use, food intolerances or inflammatory bowel disease [[2]](#2)[[5]](#5). Gut osmolality increases induce osmotic diarrhea by causing water to exit cells to balance the disrupted osmotic potential [[6]](#6). This also affects the gut microbial communities in a species dependent manner [[2]](#2)[[7]](#7). While we understand the importance of osmotic perturbations, we are still unable to predict gut microbial dynamics in response to malabsorption, which is required for effective microbiota therapy. 
 
-While we understand the importance of osmotic perturbations, we are still unable to predict gut microbial dynamics in response to malabsorption, which is required for effective microbiota therapy. Achieving predictability would allow the development of microbial therapies against malabsorption (e.g., fecal microbiota transplant or administration of probiotic strains) with clear and expected colonization outcomes. I hypothesize that osmolality is a major driver of bacterial abundance in the gut, in limiting cases superseding host-microbiota and inter-microbial interactions. Physical perturbations can impede bacterial growth by disrupting the specific environmental conditions required by bacteria to survive. In the absence of growth, bacteria cannot interact biochemically with the host or other microbes, emphasising the major role of the physical environment in shaping bacterial dynamics. As a result, microbial responses to osmotic stress in vitro should be predictive of those in vivo, possibly revealing interesting interactions between the host and the microbiota under gut environmental aberrations. 
-
-Understanding the impact of the osmolality on the gut microbiota is a necessary step towards developing microbiota-aware precision medicine. This can be achieved by leveraging *in vitro* and *in vivo* models to evaluate gut microbial responses to increased osmotic stress, which will help identify strains that can tolerate and ameliorate malabsorption. Specifically, bacterial abundance and growth rate can be measured as indicators of bacterial responses to osmotic stress. *In vitro* bacteria abundance and growth rate under different osmolalities can be rapidly and easily calculate via simple plate reader experiments. However, assessing these measures *in vivo* is more challenging, as it requires metagenomics sequencing and computational expertise. Here, we introduce a snakemake workflow to calculate bacterial replication rates using the tool [iRep](https://github.com/christophertbrown/iRep) [[8]](#8) from single time point. metagenomics sequencing.
+Understanding the impact of the osmolality on the gut microbiota is a necessary step towards developing microbiota-aware precision medicine. This can be achieved by leveraging *in vitro* and *in vivo* models to evaluate gut microbial responses to increased osmotic stress, which will help identify strains that can tolerate and ameliorate malabsorption. Specifically, bacterial abundance and growth rate can be measured as indicators of bacterial responses to osmotic stress. *In vitro* bacterial abundance and growth rate under different osmolalities can be rapidly and easily calculate via simple plate reader experiments. However, assessing these measures *in vivo* is more challenging, as it requires metagenomic sequencing and computational expertise. The lack of bioinformatics expertise could represent a barrier preventing groups from investigating changes in replication rates or relative abundance *in vivo*, thus slowing down progress in the microbiome field. Here, we introduce a snakemake workflow to calculate bacterial replication rates using the tool [iRep](https://github.com/christophertbrown/iRep) [[8]](#8) from single time point metagenomic sequencing. This workflow is currently limited to calculating *in vivo* replication rates for 2 species, *Bacteroides thetaiotaomicron* VPI-5482 and *Muribaculum intestinale* G6, but it will be further developed to allow more flexible applications. 
 
 ***
 
 
 # Workflow Overview
 
-This workflow was built using `Snakemake`, a useful tool to create reproducible and scalable data analyses. The workflow is designed to run on a defined set of downloadable FASTQ files and it calculates replication rates for two common gut commensals: *Bacteroides thetaiotaomicron* VPI-5482 and *Muribaculum intestinale* G6. The reference genome for *B. thetaiotaomicron* is downloaded from NCBI, but the genome for *M. intestinale* is provided as it is not currently publicly available. 
+This workflow was built using `Snakemake`, a useful tool to create reproducible and scalable data analyses. The workflow is designed to run on a defined set of downloadable FASTQ files and it calculates replication rates for two common gut commensals: *B. thetaiotaomicron* VPI-5482 and *M. intestinale* G6. The reference genome for *B. thetaiotaomicron* is downloaded from NCBI, but the genome for *M. intestinale* is provided as it is not currently publicly available. 
 
 <br />
 
@@ -86,7 +84,7 @@ Make sure you do not have any `conda` environments already activated:
 conda deactivate
 ```
 
-Create a `conda` environment, called "term_project", using the file `environment.yml`. This will install all the package dependencies required to run the workflow.
+Create a `conda` environment, called "term_project", using the file `environment.yml`. This will install all the package dependencies required to run the workflow. Refer to the **Troubleshooting** section further below if this step fails. 
 
 ```sh
 conda env create -f environment.yml
@@ -106,13 +104,78 @@ You are now ready to run the workflow! Choose the number of cores snakemake can 
 snakemake --cores 1
 ```
 
-## Expected output
+## Expected outputs
 
-You can check that the workflow ran to completion by comparing the outputs to the expected outputs shown here:
+You can check that the workflow ran to completion with 3 quick tests:
+
+<br />
+
+**1) Compare your output tree to the expected output tree shown here:**
+
+<img src="./man/figures/tree_expected_outputs.png" align="centre"/>
+
+<br />
+
+**2) Check the directory disk usage:**
+
+```sh
+du -sh *
+```
+
+You should see that the folder biof501_HG_term_project is 8.9G in size. 
+
+<br />
+
+**3) Open the 2 key output files: 1) Bt_1_1_4_S1_iRep.tsv and 2) G6_1_1_4_S1_iRep.tsv and check the iRep values:**
+
+The file **Bt_1_1_4_S1_iRep.tsv** should look like the image below. The key iRep value calculated through this workflow, ~1.54, is boxed in red. 
+
+<img src="./man/figures/Bt_iRep.PNG" align="centre"/>
 
 
+The file **G6_1_1_4_S1_iRep.tsv** should look like the image below. The key iRep value calculated through this workflow, N/A, is boxed in red. 
 
+<img src="./man/figures/G6_iRep.PNG" align="centre"/>
 
+If your outputs match the expected outputs in all 3 tests, you can be safe that the pipeline ran to completion successfully!
+
+***
+
+## Troubleshooting
+
+If creating the conda environment from the `environment.yml` failed, you can manually set up the conda environment by installing the required main package dependencies. 
+
+Ensure no environments are active
+
+```sh
+conda deactivate
+``` 
+
+Create the conda package and install the required dependencies
+
+```sh
+conda create -n term_project trimmomatic bowtie2 bbmap irep samtools 
+```
+
+Activate the environment
+
+```sh
+conda activate term_project
+```
+
+Install snakemake
+
+```sh
+conda install -c bioconda snakemake=6.10.0
+```
+
+Install genomepy
+
+```sh
+conda install -c bioconda genomepy
+```
+
+By manually running these commands, you should have replicated the exact same environment exported to the file `environment.yml`. You can now go to the `Usage` section to run the pipeline.
 
 
 
@@ -140,3 +203,4 @@ Gorkiewicz G, Thallinger GG, Trajanoski S, Lackner S, Stocker G, Hinterleitner T
 
 <a id="8">[8]</a>
 Brown, C. T., Olm, M. R., Thomas, B. C., & Banfield, J. F. (2016). Measurement of bacterial replication rates in microbial communities. Nature biotechnology, 34(12), 1256–1263. https://doi.org/10.1038/nbt.3704
+<br />
