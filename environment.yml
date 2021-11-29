@@ -1,4 +1,4 @@
-name: term_project
+name: HG_term_project
 channels:
   - bioconda
   - conda-forge

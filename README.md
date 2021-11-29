@@ -84,15 +84,15 @@ Make sure you do not have any `conda` environments already activated:
 conda deactivate
 ```
 
-Create a `conda` environment, called "term_project", using the file `environment.yml`. This will install all the package dependencies required to run the workflow. Refer to the **Troubleshooting** section further below if this step fails. 
+Create a `conda` environment, called "HG_term_project", using the file `environment.yml`. This will install all the package dependencies required to run the workflow. Refer to the **Troubleshooting** section further below if this step fails.
 
 ```sh
 conda env create -f environment.yml
 ```
 
-Activate the `term_project` environment:
+Activate the `HG_term_project` environment:
 ```sh
-conda activate term_project
+conda activate HG_term_project
 ```
 
 ## Usage
@@ -154,13 +154,13 @@ conda deactivate
 Create the conda package and install the required dependencies
 
 ```sh
-conda create -n term_project trimmomatic bowtie2 bbmap irep samtools 
+conda create -n HG_term_project trimmomatic bowtie2 bbmap irep samtools 
 ```
 
 Activate the environment
 
 ```sh
-conda activate term_project
+conda activate HG_term_project
 ```
 
 Install snakemake
