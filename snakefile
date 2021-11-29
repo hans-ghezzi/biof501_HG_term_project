@@ -23,17 +23,11 @@ rule download_reads:
 		
 rule download_host:
 	output:
-		multiext("mm39/mm39", ".fa", ".fa.fai", ".fa.sizes", ".gaps.bed")
-	params:
-		source="UCSC",
-		masking="hard",
-		dir="./"
-	conda:
-		"envs/genomepy.yml"
+		"mm39/mm39.fa"
 	shell:
 		"""
-		genomepy plugin disable blacklist bowtie2 bwa gmap hisat2 minimap2 star
-		genomepy install mm39 -p {params.source} -m {params.masking} -g {params.dir}
+		wget http://hgdownload.soe.ucsc.edu/goldenPath/mm39/bigZips/mm39.fa.masked.gz -O {output}.gz
+		gunzip {output}.gz
 		"""
 		
 rule trimmomatic:
@@ -47,8 +41,6 @@ rule trimmomatic:
 		r2_unpaired="analyses/trimmed/1_1_4_S1_R2_001.unpaired.fastq.gz"
 	log:
 		"logs/trimmomatic/1_1_4_S1.log"
-	conda:
-		"envs/trimmomatic.yml"
 	shell:
 		"""
 		trimmomatic PE -phred33 {input.r1_R1} {input.r1_R2} {output.r1} {output.r1_unpaired} {output.r2} {output.r2_unpaired} ILLUMINACLIP:data/adapters/NexteraPE-PE.fa:2:3:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:20 MINLEN:35
@@ -62,8 +54,6 @@ rule host_decontam:
 	output:
 		outu1="analyses/decontaminated/1_1_4_S1_R1_001.decon.fastq.gz",
 		outu2="analyses/decontaminated/1_1_4_S1_R2_001.decon.fastq.gz"
-	conda:
-		"envs/bbmap.yml"
 	shell:
 		"""
 		bbmap.sh ref={input.ref} in1={input.r1} in2={input.r2} outu1={output.outu1} outu2={output.outu2} -Xmx10g
@@ -79,8 +69,6 @@ rule Bt_indexing:
     params:
         extra=""  # optional parameters
     threads: 8
-	conda:
-		"envs/indexing_mapping.yml"
     wrapper:
         "v0.80.1/bio/bowtie2/build"
 
@@ -94,8 +82,6 @@ rule G6_indexing:
     params:
         extra=""  # optional parameters
     threads: 8
-	conda:
-		"envs/indexing_mapping.yml"
     wrapper:
         "v0.80.1/bio/bowtie2/build"
 		
@@ -108,8 +94,6 @@ rule Bt_mapping:
 		sam="analyses/alignments/B_theta/Bt_1_1_4_S1_alignment.sam"
 	params:
 		idx="BTheta"
-	conda:
-		"envs/indexing_mapping.yml"
 	shell:
 		"""
 		bowtie2 -D 20 -R 3 -N 0 -L 20 -i S,1,0.50 --reorder -x {params.idx} -1 {input.r1} -2 {input.r2} --no-unal -p 15 -S {output.sam}
@@ -124,8 +108,6 @@ rule G6_mapping:
 		sam="analyses/alignments/M_intestinale/G6_1_1_4_S1_alignment.sam"
 	params:
 		idx="MIntestinale"
-	conda:
-		"envs/indexing_mapping.yml"
 	shell:
 		"""
 		bowtie2 -D 20 -R 3 -N 0 -L 20 -i S,1,0.50 --reorder -x {params.idx} -1 {input.r1} -2 {input.r2} --no-unal -p 15 -S {output.sam}
@@ -137,8 +119,6 @@ rule iRep_Bt:
 		sam="analyses/alignments/B_theta/Bt_1_1_4_S1_alignment.sam"
 	output:
 		multiext("analyses/iRep/Bt_1_1_4_S1_iRep",".tsv", ".pdf")
-	conda:
-		"envs/irep.yml"
 	shell:
 		"""
 		iRep -ff -f {input.ref} -s {input.sam} -o analyses/iRep/Bt_1_1_4_S1_iRep
@@ -150,8 +130,6 @@ rule iRep_G6:
 		sam="analyses/alignments/M_intestinale/G6_1_1_4_S1_alignment.sam"
 	output:
 		multiext("analyses/iRep/G6_1_1_4_S1_iRep",".tsv", ".pdf")
-	conda:
-		"envs/irep.yml"
 	shell:
 		"""
 		iRep -ff -f {input.ref} -s {input.sam} -o analyses/iRep/G6_1_1_4_S1_iRep
