@@ -47,6 +47,8 @@ Here is a visualization of the workflow:
 
 <br />
 
+**NOTE** Step 3 of this pipeline, specifically host decontamination with BBmap, is computationally intensive, requiring at least 10g of RAM to successfully run. 
+
 ## Dependencies
 
 Installing and running this workflow requires [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) to be installed by the user.
