@@ -63,7 +63,6 @@ bowtie2 v2.4.4
 bbmap v38.93
 samtools v1.12
 iRep v1.1.7
-genomepy v0.11.0
 ```
 
 ## Installation
