@@ -108,7 +108,7 @@ snakemake --cores 1
 
 ## Expected outputs
 
-You can check that the workflow ran to completion with 3 quick tests:
+You can check that the workflow ran to completion with 2 quick tests:
 
 <br />
 
@@ -118,19 +118,8 @@ You can check that the workflow ran to completion with 3 quick tests:
 
 <br />
 
-**2) Check the directory disk usage:**
 
-```sh
-du -sh *
-```
-
-You should see that the folder biof501_HG_term_project is 12G in size, broken down as follows:
-
-<img src="./man/figures/disk_usage_output.PNG" align="centre"/>
-
-<br />
-
-**3) Open the 2 key output files: 1) Bt_1_1_4_S1_iRep.tsv and 2) G6_1_1_4_S1_iRep.tsv and check the iRep values:**
+**2) Open the 2 key output files: 1) Bt_1_1_4_S1_iRep.tsv and 2) G6_1_1_4_S1_iRep.tsv and check the iRep values:**
 
 The file **Bt_1_1_4_S1_iRep.tsv** should look like the image below. The key iRep value calculated through this workflow, ~1.54, is boxed in red. 
 
@@ -141,7 +130,7 @@ The file **G6_1_1_4_S1_iRep.tsv** should look like the image below. The key iRep
 
 <img src="./man/figures/G6_iRep.PNG" align="centre"/>
 
-If your outputs match the expected outputs in all 3 tests, you can be safe that the pipeline ran to completion successfully!
+If your outputs match the expected outputs in both tests, you can be safe that the pipeline ran to completion successfully!
 
 ***
 
@@ -171,12 +160,6 @@ Install snakemake
 
 ```sh
 conda install -c bioconda snakemake=6.10.0
-```
-
-Install genomepy
-
-```sh
-conda install -c bioconda genomepy
 ```
 
 You can now go to the `Usage` section to run the pipeline.
