@@ -1,6 +1,5 @@
-name: term_project
+name: HG_term_project
 channels:
-  - cruizperez
   - bioconda
   - conda-forge
   - defaults
