@@ -60,7 +60,7 @@ rule host_decontam:
 		outu2="analyses/decontaminated/1_1_4_S1_R2_001.decon.fastq.gz"
 	shell:
 		"""
-		bbmap.sh ref={input.ref} in1={input.r1} in2={input.r2} outu1={output.outu1} outu2={output.outu2} -Xmx10g
+		bbmap.sh ref={input.ref} in1={input.r1} in2={input.r2} outu1={output.outu1} outu2={output.outu2} -Xmx4g
 		"""
 		
 rule Bt_indexing:

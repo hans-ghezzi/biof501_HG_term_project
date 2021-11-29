@@ -122,7 +122,9 @@ You can check that the workflow ran to completion with 3 quick tests:
 du -sh *
 ```
 
-You should see that the folder biof501_HG_term_project is 8.9G in size. 
+You should see that the folder biof501_HG_term_project is 12G in size, broken down as follows:
+
+<img src="./man/figures/disk_usage_output.PNG" align="centre"/>
 
 <br />
 
