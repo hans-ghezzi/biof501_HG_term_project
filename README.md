@@ -64,7 +64,6 @@ bbmap v38.93
 samtools v1.12
 iRep v1.1.7
 genomepy v0.11.0
-graphviz v2.40.1
 ```
 
 ## Installation
