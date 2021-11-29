@@ -23,15 +23,11 @@ rule download_reads:
 		
 rule download_host:
 	output:
-		multiext("mm39/mm39", ".fa", ".fa.fai", ".fa.sizes", ".gaps.bed")
-	params:
-		source="UCSC",
-		masking="hard",
-		dir="./"
+		"mm39/mm39.fa"
 	shell:
 		"""
-		genomepy plugin disable blacklist bowtie2 bwa gmap hisat2 minimap2 star
-		genomepy install mm39 -p {params.source} -m {params.masking} -g {params.dir}
+		wget http://hgdownload.soe.ucsc.edu/goldenPath/mm39/bigZips/mm39.fa.masked.gz -O {output}.gz
+		gunzip {output}.gz
 		"""
 		
 rule trimmomatic:
