@@ -56,11 +56,11 @@ Installing and running this workflow requires [git](https://git-scm.com/book/en/
 This snakemake workflow relies on the following main package dependencies:
 
 ```sh
-python v3.8.12
+python v3.7.10
 snakemake v6.10.0
 trimmomatic v0.39
 bowtie2 v2.4.4
-bbmap v38.93
+bbmap v38.90
 samtools v1.12
 iRep v1.1.7
 ```
