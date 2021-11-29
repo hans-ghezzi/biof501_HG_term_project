@@ -47,7 +47,7 @@ Here is a visualization of the workflow:
 
 <br />
 
-**NOTE** Step 3 of this pipeline, specifically host decontamination with BBmap, is computationally intensive, requiring at least 10g of RAM to successfully run. 
+**NOTE:** Step 3 of this pipeline, specifically host decontamination with BBmap, is computationally intensive, requiring at least 10g of RAM to successfully run. 
 
 ## Dependencies
 
