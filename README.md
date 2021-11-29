@@ -66,6 +66,12 @@ graphviz v2.40.1
 
 ## Installation
 
+Make sure you do not have any `conda` environments already activated:
+
+```sh
+conda deactivate
+```
+
 To access the workflow, clone this repository to your computer by running:
 
 ```sh
@@ -76,12 +82,6 @@ Navigate to the project directory:
 
 ```sh
 cd biof501_HG_term_project
-```
-
-Make sure you do not have any `conda` environments already activated:
-
-```sh
-conda deactivate
 ```
 
 Create a `conda` environment, called "HG_term_project", using the file `environment.yml`. This will install all the package dependencies required to run the workflow. Refer to the **Troubleshooting** section further below if this step fails.
